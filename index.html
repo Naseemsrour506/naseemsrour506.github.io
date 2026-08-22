@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="תיק העבודות של Naseem Srour — סטודנט למדעי המחשב ומפתח תוכנה בתחילת הדרך.">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Naseem Srour | מפתח תוכנה</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --surface: rgba(255, 255, 255, .82);
+      --text: #172235;
+      --muted: #60708a;
+      --primary: #176b87;
+      --primary-dark: #0d4f68;
+      --accent: #35b6a1;
+      --line: rgba(23, 34, 53, .10);
+      --shadow: 0 22px 60px rgba(29, 52, 75, .10);
+      --radius: 24px;
+      --max: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 90% 4%, rgba(53, 182, 161, .13), transparent 27rem),
+        radial-gradient(circle at 4% 45%, rgba(23, 107, 135, .09), transparent 30rem),
+        var(--bg);
+      font-family: Arial, "Segoe UI", sans-serif;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    svg { display: block; }
+
+    .skip-link {
+      position: fixed;
+      z-index: 1000;
+      top: 12px;
+      right: 12px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      color: #fff;
+      background: var(--primary-dark);
+      transform: translateY(-150%);
+    }
+
+    .skip-link:focus { transform: translateY(0); }
+
+    .container {
+      width: min(calc(100% - 40px), var(--max));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      position: sticky;
+      z-index: 100;
+      top: 0;
+      border-bottom: 1px solid transparent;
+      backdrop-filter: blur(18px);
+      transition: background .25s, border-color .25s;
+    }
+
+    .site-header.scrolled {
+      border-color: var(--line);
+      background: rgba(245, 247, 251, .88);
+    }
+
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .brand {
+      direction: ltr;
+      font-size: 1.08rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      white-space: nowrap;
+    }
+
+    .brand-mark { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+      font-size: .94rem;
+      font-weight: 700;
+    }
+
+    .nav-links a { transition: color .2s; }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--primary); }
+
+    .github-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.56);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--text);
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .hero {
+      min-height: calc(100vh - 76px);
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      align-items: center;
+      gap: clamp(42px, 7vw, 90px);
+      padding-block: 80px 100px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 20px;
+      color: var(--primary);
+      font-size: .9rem;
+      font-weight: 800;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(3rem, 7vw, 6.8rem);
+      line-height: .98;
+      letter-spacing: -.065em;
+    }
+
+    h1 span {
+      display: block;
+      margin-top: 14px;
+      color: var(--primary);
+      font-size: .43em;
+      line-height: 1.25;
+      letter-spacing: -.035em;
+    }
+
+    .hero-text {
+      max-width: 650px;
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 1.7vw, 1.25rem);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 50px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 11px 21px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      font-weight: 800;
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+
+    .button:hover { transform: translateY(-2px); }
+    .button.primary { color: #fff; border-color: var(--primary); background: var(--primary); box-shadow: 0 12px 25px rgba(23,107,135,.22); }
+    .button.secondary { background: rgba(255,255,255,.72); }
+
+    .hero-visual {
+      position: relative;
+      aspect-ratio: 1 / 1.08;
+      display: grid;
+      place-items: center;
+    }
+
+    .portrait {
+      position: relative;
+      width: min(100%, 390px);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(23,107,135,.15);
+      border-radius: 42% 58% 55% 45% / 47% 40% 60% 53%;
+      color: var(--primary-dark);
+      background: linear-gradient(145deg, rgba(255,255,255,.94), rgba(53,182,161,.15));
+      box-shadow: var(--shadow);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .initials {
+      direction: ltr;
+      font-size: clamp(4rem, 10vw, 7.5rem);
+      font-weight: 900;
+      letter-spacing: -.1em;
+    }
+
+    .code-chip {
+      position: absolute;
+      padding: 10px 15px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--primary-dark);
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 10px 28px rgba(29,52,75,.12);
+      font-family: Consolas, monospace;
+      font-size: .85rem;
+      font-weight: 700;
+    }
+
+    .chip-one { top: 10%; left: -3%; }
+    .chip-two { right: -5%; bottom: 13%; }
+
+    section { scroll-margin-top: 90px; }
+    .section { padding-block: 100px; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 32px;
+      margin-bottom: 46px;
+    }
+
+    .section-kicker { margin: 0 0 8px; color: var(--accent); font-size: .84rem; font-weight: 900; letter-spacing: .08em; }
+    h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.15; letter-spacing: -.045em; }
+    .section-intro { max-width: 490px; margin: 0; color: var(--muted); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 24px;
+    }
+
+    .panel {
+      padding: clamp(25px, 4vw, 40px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 16px 50px rgba(29,52,75,.06);
+    }
+
+    .about-copy p { margin: 0; color: var(--muted); font-size: 1.08rem; }
+    .about-copy p + p { margin-top: 18px; }
+
+    .study-card {
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+      background: linear-gradient(145deg, var(--primary-dark), var(--primary));
+    }
+
+    .study-card::after {
+      content: "03";
+      position: absolute;
+      left: -8px;
+      bottom: -45px;
+      color: rgba(255,255,255,.07);
+      font-size: 10rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .study-card small { color: rgba(255,255,255,.7); font-weight: 700; }
+    .study-card h3 { margin: 10px 0 8px; font-size: 1.6rem; }
+    .study-card p { margin: 0; color: rgba(255,255,255,.82); }
+
+    .interests {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 11px;
+      margin-top: 25px;
+    }
+
+    .tag {
+      padding: 8px 13px;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(255,255,255,.08);
+      font-size: .84rem;
+      font-weight: 700;
+    }
+
+    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+    .project-card {
+      min-height: 410px;
+      display: flex;
+      flex-direction: column;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.73);
+      transition: transform .25s, box-shadow .25s, border-color .25s;
+    }
+
+    .project-card:hover { transform: translateY(-7px); border-color: rgba(23,107,135,.25); box-shadow: var(--shadow); }
+
+    .project-number {
+      width: 45px;
+      height: 45px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 30px;
+      border-radius: 13px;
+      color: var(--primary);
+      background: rgba(23,107,135,.09);
+      font-size: .85rem;
+      font-weight: 900;
+    }
+
+    .project-card h3 { margin: 0 0 13px; font-size: 1.35rem; line-height: 1.3; }
+    .project-card p { margin: 0; color: var(--muted); }
+    .tech-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 28px; }
+    .tech-list span { padding: 5px 10px; border-radius: 8px; color: var(--primary-dark); background: rgba(53,182,161,.10); font-size: .75rem; font-weight: 800; }
+
+    .contact-card {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      padding: clamp(32px, 6vw, 64px);
+      border-radius: 30px;
+      color: #fff;
+      background: #142c3a;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-card::before {
+      content: "";
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      left: -130px;
+      top: -200px;
+      border-radius: 50%;
+      background: rgba(53,182,161,.18);
+    }
+
+    .contact-card > * { position: relative; }
+    .contact-card h2 { max-width: 650px; }
+    .contact-card p { margin: 13px 0 0; color: rgba(255,255,255,.7); }
+    .contact-card .button { flex: 0 0 auto; border-color: transparent; color: var(--primary-dark); background: #fff; }
+
+    footer { padding: 34px 0; color: var(--muted); font-size: .88rem; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @keyframes float { 50% { transform: translateY(-10px) rotate(1deg); } }
+
+    @media (max-width: 850px) {
+      .menu-toggle { display: inline-flex; }
+      .nav-links {
+        position: absolute;
+        top: 68px;
+        right: 20px;
+        left: 20px;
+        display: none;
+        align-items: stretch;
+        gap: 5px;
+        padding: 15px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(255,255,255,.97);
+        box-shadow: var(--shadow);
+      }
+      .nav-links.open { display: grid; }
+      .nav-links a { display: block; padding: 10px; }
+      .github-link { justify-content: center; }
+      .hero { grid-template-columns: 1fr; min-height: auto; padding-block: 70px; text-align: center; }
+      .hero-copy { display: flex; flex-direction: column; align-items: center; }
+      .hero-visual { width: min(85%, 430px); margin-inline: auto; }
+      .about-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card { min-height: 320px; }
+    }
+
+    @media (max-width: 620px) {
+      .container { width: min(calc(100% - 28px), var(--max)); }
+      .section { padding-block: 72px; }
+      .section-head, .contact-card, .footer-inner { align-items: flex-start; flex-direction: column; }
+      .section-intro { margin-top: 12px; }
+      .contact-card .button { width: 100%; }
+      .chip-one { left: -7%; }
+      .chip-two { right: -7%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">דילוג לתוכן הראשי</a>
+
+  <header class="site-header" id="header">
+    <nav class="container nav" aria-label="ניווט ראשי">
+      <a class="brand" href="#top" aria-label="Naseem Srour — דף הבית"><span class="brand-mark">&lt;</span> Naseem Srour <span class="brand-mark">/&gt;</span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="פתיחת תפריט">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#about">אודות</a></li>
+        <li><a href="#projects">פרויקטים</a></li>
+        <li><a href="#contact">יצירת קשר</a></li>
+        <li><a class="github-link" href="https://github.com/Naseemsrour506" target="_blank" rel="noopener noreferrer" aria-label="פרופיל GitHub של Naseem, נפתח בחלון חדש">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .8a11.4 11.4 0 0 0-3.6 22.2c.6.1.8-.2.8-.6v-2.2c-3.4.7-4.1-1.4-4.1-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.6-1.4-5.6-6.1 0-1.4.5-2.5 1.2-3.3-.1-.3-.5-1.6.1-3.3 0 0 1-.3 3.4 1.3a11.8 11.8 0 0 1 6.2 0c2.4-1.6 3.4-1.3 3.4-1.3.6 1.7.2 3 .1 3.3.8.8 1.2 1.9 1.2 3.3 0 4.7-2.9 5.8-5.6 6.1.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6A11.4 11.4 0 0 0 12 .8Z"/></svg>
+          GitHub
+        </a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="container hero" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow">סטודנט למדעי המחשב · מפתח תוכנה</p>
+        <h1>Naseem Srour<span>בונה תוכנה, לומד לעומק ומחפש את האתגר הבא.</span></h1>
+        <p class="hero-text">סטודנט שנה שלישית למדעי המחשב באוניברסיטת תל־חי, עם תשוקה לפיתוח מערכות שימושיות, מאובטחות ואמינות.</p>
+        <div class="actions">
+          <a class="button primary" href="#projects">לפרויקטים שלי <span aria-hidden="true">←</span></a>
+          <a class="button secondary" href="https://github.com/Naseemsrour506" target="_blank" rel="noopener noreferrer">לפרופיל GitHub</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="portrait"><span class="initials">NS</span></div>
+        <span class="code-chip chip-two">&lt;developer /&gt;</span>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><p class="section-kicker">קצת עליי</p><h2>סקרנות שהופכת לקוד</h2></div>
+          <p class="section-intro">אני אוהב להבין איך מערכות עובדות מבפנים — ואז להפוך את הידע הזה לפתרונות ברורים ושימושיים.</p>
+        </div>
+        <div class="about-grid">
+          <div class="panel about-copy reveal">
+            <p>אני מפתח תוכנה בתחילת הדרך, עם בסיס אקדמי במדעי המחשב וניסיון מעשי בבניית מערכות Full Stack, שירותי Backend וכלים שמשלבים בינה מלאכותית.</p>
+            <p>חשובים לי קוד נקי, למידה מתמדת ועבודה מסודרת. אני מחפש הזדמנויות לצמוח, לפתור בעיות אמיתיות ולתרום לצוות טכנולוגי.</p>
+          </div>
+          <div class="panel study-card reveal">
+            <small>השכלה</small>
+            <h3>B.Sc. במדעי המחשב</h3>
+            <p>אוניברסיטת תל־חי · שנה שלישית</p>
+            <div class="interests" aria-label="תחומי עניין">
+              <span class="tag">Software Development</span><span class="tag">Cybersecurity</span><span class="tag">Backend</span><span class="tag">QA Automation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><p class="section-kicker">עבודות נבחרות</p><h2>פרויקטים שבניתי</h2></div>
+          <p class="section-intro">שלושה פרויקטים שמדגימים עבודה עם Web, בינה מלאכותית וארכיטקטורת Microservices.</p>
+        </div>
+        <div class="projects-grid">
+          <article class="project-card reveal">
+            <span class="project-number">01</span>
+            <h3>E-Test</h3>
+            <p>מערכת Full Stack לניהול מבחנים. מרצים יכולים ליצור מבחנים, וסטודנטים יכולים להירשם, לבצע אותם ולקבל ציונים.</p>
+            <div class="tech-list" aria-label="טכנולוגיות"><span>React</span><span>Node.js</span><span>Express</span><span>PostgreSQL</span></div>
+          </article>
+          <article class="project-card reveal">
+            <span class="project-number">02</span>
+            <h3>Gemini PPTX Explainer</h3>
+            <p>מערכת שמקבלת מצגת PowerPoint ומייצרת הסבר חכם וממוקד לכל שקופית באמצעות Gemini API.</p>
+            <div class="tech-list" aria-label="טכנולוגיות"><span>Python</span><span>Flask</span><span>SQLAlchemy</span><span>Gemini API</span></div>
+          </article>
+          <article class="project-card reveal">
+            <span class="project-number">03</span>
+            <h3>Service Discovery</h3>
+            <p>שירות בארכיטקטורת Microservices שמנהל רישום ומעקב אחר containers ומספק ל־Load Balancer מידע על instances זמינים.</p>
+            <div class="tech-list" aria-label="טכנולוגיות"><span>Python</span><span>REST APIs</span><span>Redis</span><span>Microservices</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact-card reveal">
+          <div><p class="section-kicker">בואו נדבר</p><h2>מחפש את ההזדמנות הבאה ללמוד, לבנות ולהשפיע.</h2><p>פרויקטים נוספים ועדכונים זמינים בפרופיל ה־GitHub שלי.</p></div>
+          <a class="button" href="https://github.com/Naseemsrour506" target="_blank" rel="noopener noreferrer">צפייה ב־GitHub <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner"><span>© <span id="year"></span> Naseem Srour</span><span>עוצב ונבנה בקפידה.</span></div>
+  </footer>
+
+  <script>
+    const header = document.querySelector('#header');
+    const menuButton = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('#nav-links');
+
+    const updateHeader = () => header.classList.toggle('scrolled', window.scrollY > 12);
+    updateHeader();
+    window.addEventListener('scroll', updateHeader, { passive: true });
+
+    menuButton.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', String(isOpen));
+      menuButton.setAttribute('aria-label', isOpen ? 'סגירת תפריט' : 'פתיחת תפריט');
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuButton.setAttribute('aria-expanded', 'false');
+    }));
+
+    document.querySelector('#year').textContent = new Date().getFullYear();
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
+  </script>
+</body>
+</html>
